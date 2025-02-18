@@ -6,13 +6,15 @@ const { engine } = require("express-handlebars");
 const app = express();
 const port = 3000;
 
-const route = require('./routes/index')
+const route = require("./routes/index");
 app.use(express.static(path.join(__dirname, "public")));
 
 // chỗ này chính là middleware được tích hợp sẵn trong express để có thể lấy được biến trong res.body
-app.use(express.urlencoded({
-  extended: true
-}));
+app.use(
+  express.urlencoded({
+    extended: true,
+  }),
+);
 app.use(express.json());
 
 // HTTP logger
@@ -23,15 +25,13 @@ app.engine(
   ".hbs",
   engine({
     extname: ".hbs",
-  })
+  }),
 );
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "resources/views"));
 
 // Routes init
 route(app);
-
-
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
