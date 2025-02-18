@@ -6,6 +6,7 @@ const { engine } = require("express-handlebars");
 const app = express();
 const port = 3000;
 
+const route = require('./routes/index')
 app.use(express.static(path.join(__dirname, "public")));
 
 // chỗ này chính là middleware được tích hợp sẵn trong express để có thể lấy được biến trong res.body
@@ -27,21 +28,10 @@ app.engine(
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "resources/views"));
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
-app.get("/news", (req, res) => {
-  res.render("news");
-});
+// Routes init
+route(app);
 
-app.get("/search", (req, res) => {
-  res.render("search");
-});
 
-app.post("/search", (req, res) => {
-  console.log(req.body.q);
-  res.send("123123");
-});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
