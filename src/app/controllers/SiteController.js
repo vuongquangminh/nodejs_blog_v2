@@ -1,15 +1,17 @@
-const Course = require('../models/Course')
+const Course = require("../models/Course");
 
 class SiteController {
   // [GET] /
-  async index(req, res) {
-      try{
-        const courses = await Course.find({});
-        res.json(courses);
-      } catch (error) {
-        res.status(400).json({ error: 'error!' });
-      }
-
+  async index(req, res, next) {
+    try {
+      const courses = await Course.find({});
+      // res.json(courses);
+      const new_courses = courses.map(course => course.toObject())
+      res.render("home", { new_courses });
+    } catch (error) {
+      next(err);
+      res.status(400).json({ error: "error!" });
+    }
 
     // res.render("home");
   }
