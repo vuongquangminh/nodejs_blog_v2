@@ -1,15 +1,16 @@
 const Course = require("../models/Course");
-const {mutipleMongooseToObject} = require('../../util/mongoose')
+const { mongooseToObject } = require("../../util/mongoose");
 
 class SiteController {
   // [GET] / courses/:slug
   async show(req, res, next) {
     //Cach 1
-    Course.findOne({slug: req.params.slug}).then((course) => {
-      res.json(course)
-    }).catch(next)
+    Course.findOne({ slug: req.params.slug })
+      .then((course) => {
+        res.render("courses/show", { course: course.toObject() });
+      })
+      .catch(next);
 
-    
     // Cách 2
     // const course = await Course.findOne({slug: req.params.slug});
     // res.json(course)
