@@ -3,18 +3,16 @@ const {mutipleMongooseToObject} = require('../../util/mongoose')
 
 class SiteController {
   // [GET] / courses/:slug
-  show(req, res, next) {
-    try {
-      // req.query.slug
-      console.log('course detail - ' + req.params.slug)
-      res.send('123')
-    } catch (error) {
-      next(err);
-      res.status(400).json({ error: "error!" });
-    }
+  async show(req, res, next) {
+    //Cach 1
+    Course.findOne({slug: req.params.slug}).then((course) => {
+      res.json(course)
+    }).catch(next)
 
-    // res.send('123')
-    // res.render("home");
+    
+    // Cách 2
+    // const course = await Course.findOne({slug: req.params.slug});
+    // res.json(course)
   }
 
   // [GET] /search
