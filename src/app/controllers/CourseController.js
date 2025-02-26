@@ -7,7 +7,7 @@ class SiteController {
     //Cach 1
     Course.findOne({ slug: req.params.slug })
       .then((course) => {
-        res.render("courses/show", { course: course.toObject() });
+        res.render("courses/show", { course: mongooseToObject(course) });
       })
       .catch(next);
 
@@ -16,9 +16,23 @@ class SiteController {
     // res.json(course)
   }
 
-  // [GET] /search
-  search(req, res) {
-    res.render("search");
+  // [GET] /course/create
+  create(req, res) {
+    res.render("courses/create");
+  }
+  // [POST] /course/store
+  // async store(req, res, next) {
+  //   await Course.create(req.body);
+  // }
+
+  store(req, res, next) {
+    const formData = req.body;
+    formData.image = `https://img.youtube.com/vi/${formData.videoId}/sddefault.jpg`;
+    const course = new Course(formData);
+    course
+      .save()
+      .then(() => res.redirect("/"))
+      .catch((err) => {});
   }
 }
 
