@@ -1,7 +1,7 @@
 const Course = require("../models/Course");
 const { mongooseToObject } = require("../../util/mongoose");
 
-class SiteController {
+class CourseController {
   // [GET] / courses/:slug
   async show(req, res, next) {
     //Cach 1
@@ -34,6 +34,12 @@ class SiteController {
       .then(() => res.redirect("/"))
       .catch((err) => {});
   }
+
+  //[GET] /courses/:id/edit
+  async edit(req, res, next) {
+    const course = await Course.findOne({ _id: req.params.id });
+    res.render("courses/edit", { course: course.toObject() });
+  }
 }
 
-module.exports = new SiteController();
+module.exports = new CourseController();
