@@ -24,6 +24,7 @@ class CourseController {
   // async store(req, res, next) {
   //   await Course.create(req.body);
   // }
+  [POST] /course/store
 
   store(req, res, next) {
     const formData = req.body;
