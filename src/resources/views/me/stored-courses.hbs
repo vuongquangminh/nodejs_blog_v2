@@ -18,13 +18,18 @@
           <td>{{this.createdAt}}</td>
           <td>
             <a href="/courses/{{this._id}}/edit" class="btn btn-link">Sửa</a>
-            <a href="" data-toggle="modal" data-target="#delete-course-modal">
+            <a
+              id="btn-delete-course"
+              href=""
+              data-toggle="modal"
+              data-target="#delete-course-modal"
+              data-id="{{this._id}}"
+            >
               Xóa
             </a>
           </td>
         </tr>
       {{/each}}
-
     </tbody>
   </table>
 </div>
@@ -48,13 +53,24 @@
         <p>Bạn chắc chắn muốn xóa khóa học này?</p>
       </div>
       <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          data-dismiss="modal"
-        >Hủy</button>
-        <button type="button" class="btn btn-danger">Xóa bỏ</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Hủy
+        </button>
+        <button type="button" class="btn btn-danger">
+          Xóa bỏ
+        </button>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  $('#delete-course-modal').on('show.bs.modal', function(event) {
+    var button = $(event.relatedTarget);
+    var id = button.data('id')
+    console.log(id)
+  })
+});
+
+</script>
