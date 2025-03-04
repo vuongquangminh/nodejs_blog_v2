@@ -21,6 +21,14 @@ class MeController {
       .then(() => res.redirect(303, "/me/stored/courses"))
       .catch(next);
   }
+
+  // [GET] /me/trash/courses
+  async trashCourses(req, res, next) {
+    const courses = await Course.findDeleted({ });
+    res.render("me/trash-courses", {
+      courses: courses.map((item) => item.toObject()),
+    });
+  }
 }
 
 module.exports = new MeController();
