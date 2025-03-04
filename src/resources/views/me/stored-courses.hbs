@@ -19,7 +19,7 @@
           <td>
             <a href="/courses/{{this._id}}/edit" class="btn btn-link">Sửa</a>
             <a
-              id="btn-delete-course"
+              id="btn-delete-course2"
               href=""
               data-toggle="modal"
               data-target="#delete-course-modal"
@@ -56,7 +56,7 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Hủy
         </button>
-        <button type="button" class="btn btn-danger">
+        <button id="btn-delete-course" type="button" class="btn btn-danger">
           Xóa bỏ
         </button>
       </div>
@@ -64,13 +64,25 @@
   </div>
 </div>
 
+{{!-- Delete hidden form --}}
+  <form name="delete-course-form" method="POST">
+  </form>
+
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  $('#delete-course-modal').on('show.bs.modal', function(event) {
-    var button = $(event.relatedTarget);
-    var id = button.data('id')
-    console.log(id)
-  })
-});
+  document.addEventListener("DOMContentLoaded", function () {
+    var courseId; 
+    var deleteFrom = document.forms['delete-course-form'];
+    var btnDeleteCourse = document.getElementById('btn-delete-course');
+
+    $('#delete-course-modal').on('show.bs.modal', function(event) {
+      var button = $(event.relatedTarget);
+      courseId = button.data('id')
+    })
+
+    btnDeleteCourse.onclick = function () {
+      deleteFrom.action = '/me/courses/'+ courseId +'?_method=DELETE';
+      deleteFrom.submit()
+  }
+  });
 
 </script>
