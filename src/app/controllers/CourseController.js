@@ -27,12 +27,11 @@ class CourseController {
   // [POST] /course/store
 
   store(req, res, next) {
-    const formData = req.body;
-    formData.image = `https://img.youtube.com/vi/${formData.videoId}/sddefault.jpg`;
-    const course = new Course(formData);
+    req.body.image = `https://img.youtube.com/vi/${formData.videoId}/sddefault.jpg`;
+    const course = new Course(req.body);
     course
       .save()
-      .then(() => res.redirect("/"))
+      .then(() => res.redirect("/me/stored/courses"))
       .catch((err) => {});
   }
 
@@ -40,6 +39,19 @@ class CourseController {
   async edit(req, res, next) {
     const course = await Course.findOne({ _id: req.params.id });
     res.render("courses/edit", { course: course.toObject() });
+  }
+
+  // [PATCH]  /courses/:id/restore
+  restore(req, res, next) {
+    Course.restore({ _id: req.params.id })
+      .then(() => res.redirect("back"))
+      .catch(next);
+  }
+  // [DELETE] /courses/:id/force 
+  forceDestroy(req, res, next) {
+    Course.deleteOne({ _id: req.params.id })
+          .then(() => res.redirect(303, "/me/stored/courses"))
+          .catch(next);
   }
 }
 
