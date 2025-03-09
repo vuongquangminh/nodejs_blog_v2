@@ -24,13 +24,13 @@ class MeController {
 
   // [GET] /me/trash/courses
   async trashCourses(req, res, next) {
-    const courses = await Course.findDeleted({ });
+    const courses = await Course.findWithDeleted({ deleted: true });
     res.render("me/trash-courses", {
       courses: courses.map((item) => item.toObject()),
     });
   }
+
+
 }
 
 module.exports = new MeController();
-
-
