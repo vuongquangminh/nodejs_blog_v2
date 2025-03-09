@@ -1,12 +1,19 @@
 const Course = require("../models/Course");
-const { mongooseToObject } = require("../../util/mongoose");
+const {
+  mongooseToObject,
+  mutipleMongooseToObject,
+} = require("../../util/mongoose");
 
 class MeController {
   // [POST] /me/stored/courses
   async storedCourses(req, res) {
     const courses = await Course.find({});
+    const countDocumentDeleted = await Course.countDocumentsWithDeleted({deleted: true});
+    console.log("countDocumentDeleted: ", countDocumentDeleted);
+
     res.render("me/stored-courses", {
-      courses: courses.map((item) => item.toObject()),
+      countDocumentDeleted,
+      courses: mutipleMongooseToObject(courses),
     });
   }
   update(req, res, next) {
@@ -25,12 +32,11 @@ class MeController {
   // [GET] /me/trash/courses
   async trashCourses(req, res, next) {
     const courses = await Course.findWithDeleted({ deleted: true });
+
     res.render("me/trash-courses", {
       courses: courses.map((item) => item.toObject()),
     });
   }
-
-
 }
 
 module.exports = new MeController();

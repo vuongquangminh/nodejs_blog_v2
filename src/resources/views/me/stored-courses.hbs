@@ -1,7 +1,8 @@
 <div class="mt-4">
   <div class="">
     <h3>Khóa học của tôi</h3>
-    <a href="/me/trash/courses">Thùng rác</a>
+
+    <a href="/me/trash/courses">Thùng rác ({{countDocumentDeleted}})</a>
   </div>
   <table class="table mt-4">
     <thead>
@@ -80,17 +81,12 @@
 </form>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () { 
-    var courseId; 
-    var deleteFrom = document.forms['delete-course-form']; 
-    var btnDeleteCourse =document.getElementById('btn-delete-course');
-  $('#delete-course-modal').on('show.bs.modal', function(event) { 
-    var button = $(event.relatedTarget); 
-    courseId = button.data('id') })
-    btnDeleteCourse.onclick = function () { 
-      deleteFrom.action = '/me/courses/'+ courseId +'?_method=DELETE'; 
-      deleteFrom.submit() 
-      } 
-    });
+  document.addEventListener("DOMContentLoaded", function () { var courseId; var
+  deleteFrom = document.forms['delete-course-form']; var btnDeleteCourse
+  =document.getElementById('btn-delete-course');
+  $('#delete-course-modal').on('show.bs.modal', function(event) { var button =
+  $(event.relatedTarget); courseId = button.data('id') })
+  btnDeleteCourse.onclick = function () { deleteFrom.action = '/me/courses/'+
+  courseId +'?_method=DELETE'; deleteFrom.submit() } });
 
 </script>

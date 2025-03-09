@@ -47,11 +47,11 @@ class CourseController {
       .then(() => res.redirect("back"))
       .catch(next);
   }
-  // [DELETE] /courses/:id/force 
+  // [DELETE] /courses/:id/force
   forceDestroy(req, res, next) {
     Course.deleteOne({ _id: req.params.id })
-          .then(() => res.redirect(303, "/me/stored/courses"))
-          .catch(next);
+      .then(() => res.redirect(303, "/me/stored/courses"))
+      .catch(next);
   }
 }
 
